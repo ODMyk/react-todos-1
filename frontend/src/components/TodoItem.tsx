@@ -5,6 +5,7 @@ import {CSS} from "@dnd-kit/utilities";
 
 interface TodoItemProps {
   todo: Todo;
+  draggingId: number;
   onCompletedChange: (id: number, completed: boolean) => void;
   onTodoDelete: (id: number) => void;
   id: number;
@@ -15,15 +16,15 @@ export default function TodoItem({
   onCompletedChange,
   onTodoDelete,
   id,
+  draggingId,
 }: TodoItemProps) {
   const {attributes, listeners, setNodeRef, transform, transition} =
     useSortable({id});
 
-  console.log(CSS.Transform.toString(transform));
-
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: draggingId === id ? "0.5" : "1",
   };
 
   return (

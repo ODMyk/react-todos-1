@@ -18,11 +18,11 @@ import {useCallback, useMemo} from "react";
 
 interface TodoListProps {
   todos: Todo[];
+  draggingId: number;
   onCompletedChange: (id: number, completed: boolean) => void;
   onTodoDelete: (id: number) => void;
   onOrderChange: (currentId: number, secondId: number) => void;
-  handleDragStart: () => void;
-  handleDragMove: () => void;
+  onDragStart: (id: number) => void;
 }
 
 export default function TodoList({
@@ -30,8 +30,8 @@ export default function TodoList({
   onCompletedChange,
   onTodoDelete,
   onOrderChange,
-  handleDragMove,
-  handleDragStart,
+  draggingId,
+  onDragStart,
 }: TodoListProps) {
   const ids = useMemo(() => todos.map((t) => t.id), [todos]);
 
@@ -58,10 +58,16 @@ export default function TodoList({
     [onOrderChange],
   );
 
+  const handleDragStart = useCallback(
+    (e: DragEndEvent) => {
+      onDragStart(e.active.id as number);
+    },
+    [onDragStart],
+  );
+
   return (
     <DndContext
       onDragStart={handleDragStart}
-      onDragMove={handleDragMove}
       onDragEnd={handleDragEnd}
       collisionDetection={closestCenter}
       sensors={sensors}
@@ -75,6 +81,7 @@ export default function TodoList({
               onTodoDelete={onTodoDelete}
               id={todo.id}
               key={todo.id}
+              draggingId={draggingId}
             />
           ))}
           {todos.length === 0 && (

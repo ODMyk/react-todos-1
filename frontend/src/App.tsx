@@ -9,8 +9,8 @@ export default function App() {
     deleteTodo,
     setTodoCompleted,
     onOrderChange,
-    handleDragMove,
     handleDragStart,
+    draggingId,
   } = useTodos();
 
   return (
@@ -23,8 +23,8 @@ export default function App() {
             onCompletedChange={setTodoCompleted}
             onTodoDelete={deleteTodo}
             onOrderChange={onOrderChange}
-            handleDragStart={handleDragStart}
-            handleDragMove={handleDragMove}
+            onDragStart={handleDragStart}
+            draggingId={draggingId}
           />
         </div>
       </main>
