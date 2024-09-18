@@ -6,6 +6,7 @@ const ws = new WebSocket("ws://localhost:8080");
 export default function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [draggingId, setDraggingId] = useState(-1);
+  const [donations, setDonations] = useState(0);
 
   useEffect(() => {
     ws.onmessage = (m) => {
@@ -21,6 +22,8 @@ export default function useTodos() {
         setDraggingId(data);
       } else if (type === "dragEnd") {
         setDraggingId(-1);
+      } else if (type === "updateDonations") {
+        setDonations(data);
       }
     };
   }, []);
@@ -76,5 +79,6 @@ export default function useTodos() {
     onOrderChange,
     handleDragStart,
     draggingId,
+    donations,
   };
 }

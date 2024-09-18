@@ -1,6 +1,7 @@
 import TodoList from "./components/TodoList";
 import AddTodoForm from "./components/AddTodoForm";
 import useTodos from "./hooks/useTodos";
+import {KoFiWidget} from "./components/KoFiWidget";
 
 export default function App() {
   const {
@@ -11,6 +12,7 @@ export default function App() {
     onOrderChange,
     handleDragStart,
     draggingId,
+    donations,
   } = useTodos();
 
   return (
@@ -26,6 +28,12 @@ export default function App() {
             onDragStart={handleDragStart}
             draggingId={draggingId}
           />
+          <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
+              <KoFiWidget />
+              <h3 className="text-white text-bold">Total: {donations}</h3>
+            </div>
+          </div>
         </div>
       </main>
     </>
